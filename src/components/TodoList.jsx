@@ -7,21 +7,6 @@ const TodoList = () => {
     { name: "あいうえお", status: "未完" },
     { name: "かきくけこ", status: "完了" },
   ]);
-  // console.log(todos)
-  // [0: Object { name: "あいうえお", status: "未完" }
-  // 1: Object { name: "かきくけこ", status: "完了" }]
-  //
-  //console.log(setTodos)
-  // function dispatchSetState()  ← これなに？
-  // function dispatchSetState()  ← これなに？
-
-  const convertStatus = (list) => {
-    if (list.status === "未完") {
-      list.status = "完了";
-    } else if (list.status === "完了") {
-      list.status = "未完";
-    }
-  };
 
   return (
     // ここにTodoコンポーネントを並べる
@@ -86,6 +71,9 @@ const TodoList = () => {
         </label>
         <button
           onClick={() => {
+            if (todoName === "") {
+              return;
+            }
             setTodos((todos) => [...todos, { name: todoName, status: "未完" }]);
           }}
         >
