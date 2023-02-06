@@ -1,6 +1,6 @@
 import Counter from "./components/Counter";
 import ItemList from "./components/ItemList";
-import ToDoList from "./components/ToDoList";
+import TodoList from "./components/TodoList";
 import "./App.css";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Counter />
       <Counter />
       <ItemList />
-      <ToDoList />
+      <TodoList />
     </div>
   );
 }

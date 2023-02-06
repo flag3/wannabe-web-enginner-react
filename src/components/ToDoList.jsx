@@ -1,50 +1,99 @@
-import ToDo from "./ToDo"
+import Todo from "./Todo";
 import { useState } from "react";
 
-const ToDoList = () => {
-  const [toDoName, setToDoName] = useState("");
-  const [toDoStatus, setToDoStatus] = useState("");
-  const [toDos, setToDos] = useState([
-    { name: "あいうえお", stat: "未完了"},
-    { name: "かきくけこ", stat: "完了"},
+const TodoList = () => {
+  const [todoName, setTodoName] = useState("");
+  const [todos, setTodos] = useState([
+    { name: "あいうえお", status: "未完" },
+    { name: "かきくけこ", status: "完了" },
   ]);
+  // console.log(todos)
+  // [0: Object { name: "あいうえお", status: "未完" }
+  // 1: Object { name: "かきくけこ", status: "完了" }]
+  //
+  //console.log(setTodos)
+  // function dispatchSetState()  ← これなに？
+  // function dispatchSetState()  ← これなに？
+
+  const convertStatus = (list) => {
+    if (list.status === "未完") {
+      list.status = "完了";
+    } else if (list.status === "完了") {
+      list.status = "未完";
+    }
+  };
+
   return (
-    // ここにTodoコンポーネントを並べるl
+    // ここにTodoコンポーネントを並べる
     <div>
       <h2>ToDoリスト</h2>
-      <ul>
-        {toDos.map((todo) => {
+      <table>
+        {todos.map((todo, index) => {
           return (
-            <li key={todo.name}>
-              <ToDo name={todo.name} stat={todo.stat} />
-            </li>
+            <Todo
+              key={todo.name}
+              name={todo.name}
+              status={todo.status}
+              handleOnClick={() => {
+                if (todos[index].status === "未完") {
+                  todos[index].status = "完了";
+                } else if (todos[index].status === "完了") {
+                  todos[index].status = "未完";
+                }
+                setTodos([...todos]);
+              }}
+              handleDelete={() => {
+                while (index < todos.length - 1) {
+                  const hoge = todos[index];
+                  todos[index] = todos[index + 1];
+                  todos[index + 1] = hoge;
+                  index++;
+                }
+                todos.pop();
+                setTodos([...todos]);
+              }}
+              handleUp={() => {
+                if (index === 0) {
+                  return;
+                }
+                const hoge = todos[index];
+                todos[index] = todos[index - 1];
+                todos[index - 1] = hoge;
+                setTodos([...todos]);
+              }}
+              handleDown={() => {
+                if (index === todos.length - 1) {
+                  return;
+                }
+                const hoge = todos[index];
+                todos[index] = todos[index + 1];
+                todos[index + 1] = hoge;
+                setTodos([...todos]);
+              }}
+            />
           );
         })}
-      </ul>
+      </table>
       <div>
-        <label htmlFor="toDoName">
-          ToDo :
+        <label htmlFor="todoName">
+          Todo :
           <input
             type="text"
-            id="toDoName"
-            onChange={(e) => setToDoName(e.target.value)}
-            value={toDoName}
+            id="todoName"
+            onChange={(e) => setTodoName(e.target.value)}
+            value={todoName}
           />
         </label>
+        <button
+          onClick={() => {
+            setTodos((todos) => [...todos, { name: todoName, status: "未完" }]);
+          }}
+        >
+          追加
+        </button>
       </div>
-      <button
-        onClick={() => {
-          setToDos((toDos) => [
-            ...toDos,
-            { name: toDoName, stat: "未完了" },
-          ]);
-        }}
-      >
-        追加
-      </button>
     </div>
   );
 };
 
-export default ToDoList;
-
+export default TodoList;

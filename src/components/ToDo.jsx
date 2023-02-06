@@ -1,10 +1,25 @@
-const ToDo = (props) => {
+const Todo = (props) => {
   return (
-    <div>
-      <div>名前: {props.name}</div>
-      <div>状態: {props.stat}</div>
-    </div>
+    <tr>
+      <td> {props.name} </td>
+      <td>
+        {" "}
+        <button onClick={props.handleOnClick}>{props.status}</button>{" "}
+      </td>
+      <td>
+        {" "}
+        <button onClick={props.handleDelete}>削除</button>{" "}
+      </td>
+      <td>
+        {" "}
+        <button onClick={props.handleUp}>↑</button>{" "}
+      </td>
+      <td>
+        {" "}
+        <button onClick={props.handleDown}>↓</button>{" "}
+      </td>
+    </tr>
   );
 };
 
-export default ToDo;
+export default Todo;
